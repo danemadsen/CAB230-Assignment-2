@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import { fetchMovies } from '../API';
 
 function MoviesPage() {
   const [movies, setMovies] = React.useState([]);
@@ -16,14 +16,14 @@ function MoviesPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.get(`http://sefdb02.qut.edu.au:3000/movies/search?year=${year}&title=${title}`)
-      .then(response => setMovies(response.data.results))
+    fetchMovies(year, title)
+      .then(results => setMovies(results))
       .catch(error => console.log(error));
   };
 
   React.useEffect(() => {
-    axios.get(`http://sefdb02.qut.edu.au:3000/movies/search?year=${year}&title=${title}`)
-      .then(response => setMovies(response.data.results))
+    fetchMovies(year, title)
+      .then(results => setMovies(results))
       .catch(error => console.log(error));
   }, [year, title]);
 
@@ -40,35 +40,35 @@ function MoviesPage() {
         <button type="submit">Search</button>
       </form>
       {movies.length > 0 ? (
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>IMDb ID</th>
-            <th>IMDb Rating</th>
-            <th>Rotten Tomatoes Rating</th>
-            <th>Metacritic Rating</th>
-            <th>Classification</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movies.map(movie => (
-            <tr key={movie.id}>
-              <td>{movie.title}</td>
-              <td>{movie.year.slice(0, 4)}</td>
-              <td>{movie.imdbID}</td>
-              <td>{movie.imdbRating}</td>
-              <td>{movie.rottentomatoesRating}</td>
-              <td>{movie.metacriticRating}</td>
-              <td>{movie.classification}</td>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>IMDb ID</th>
+              <th>IMDb Rating</th>
+              <th>Rotten Tomatoes Rating</th>
+              <th>Metacritic Rating</th>
+              <th>Classification</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-        ) : (
-            <p>Loading....</p>
-        )}
+          </thead>
+          <tbody>
+            {movies.map(movie => (
+              <tr key={movie.id}>
+                <td>{movie.title}</td>
+                <td>{movie.year.slice(0, 4)}</td>
+                <td>{movie.imdbID}</td>
+                <td>{movie.imdbRating}</td>
+                <td>{movie.rottentomatoesRating}</td>
+                <td>{movie.metacriticRating}</td>
+                <td>{movie.classification}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>Loading....</p>
+      )}
     </div>
   );
 }
