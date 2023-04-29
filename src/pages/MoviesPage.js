@@ -1,32 +1,25 @@
 import React from 'react';
-import { fetchMovies } from '../API';
+import { fetchMovies } from '../API.js';
 
-function MoviesPage() {
+const MoviesPage = () => {
   const [movies, setMovies] = React.useState([]);
   const [year, setYear] = React.useState('1996');
   const [title, setTitle] = React.useState('');
-
-  const handleYearChange = (event) => {
-    setYear(event.target.value);
-  };
-
-  const handleTitleChange = (event) => {
+  
+  function handleTitleChange(event) {
     setTitle(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  }
+  
+  function handleYearChange(event) {
+    setYear(event.target.value);
+  }
+  
+  function handleSubmit(event) {
     event.preventDefault();
-    fetchMovies(year, title)
-      .then(results => setMovies(results))
-      .catch(error => console.log(error));
-  };
-
-  React.useEffect(() => {
-    fetchMovies(year, title)
-      .then(results => setMovies(results))
-      .catch(error => console.log(error));
-  }, [year, title]);
-
+    const results = fetchMovies(year, title);
+    setMovies(results);
+  }
+  
   return (
     <div>
       <h1>Popular Movies</h1>
@@ -71,6 +64,6 @@ function MoviesPage() {
       )}
     </div>
   );
-}
+};
 
 export default MoviesPage;

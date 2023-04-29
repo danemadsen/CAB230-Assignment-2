@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import LandingPage from './pages/LandingPage.js';
-import MoviesPage from './pages/MoviesPage.js';
-import MoviePage from './pages/MoviePage.js';
-import PersonPage from './pages/PersonPage.js';
-import ProfilePage from './pages/ProfilePage.js';
+import LandingPage from './pages/LandingPage';
+import MoviesPage from './pages/MoviesPage';
+import MoviePage from './pages/MoviePage';
+import PersonPage from './pages/PersonPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 function App() {

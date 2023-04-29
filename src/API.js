@@ -23,3 +23,15 @@ export const fetchMovie = async (id) => {
     return null;
   }
 };
+
+export const fetchPerson = async (id) => {
+  try {
+    const response = await fetch(`${API_ADDRESS}/people/data/${id}`);
+    const data = await response.json();
+    console.log(data); // log the response data to see what's returned
+    return data.results;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
