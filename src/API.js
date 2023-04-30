@@ -94,3 +94,83 @@ export const POST_Register = async (email, password) => {
   }
 };
 
+export const POST_Login = async (email, password, longExpiry = false) => {
+  try {
+    const response = await fetch(`${API_ADDRESS}/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password, longExpiry }),
+    });
+
+    if (response.status === 429) {
+      throw new Error('Too many requests, please try again later.');
+    }
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: error.message };
+  }
+};
+
+export const POST_Refresh = async (refreshToken) => {
+  try {
+    const response = await fetch(`${API_ADDRESS}/user/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (response.status === 429) {
+      throw new Error('Too many requests, please try again later.');
+    }
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: error.message };
+  }
+};
+
+export const POST_Logout = async (refreshToken) => {
+  try {
+    const response = await fetch(`${API_ADDRESS}/user/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (response.status === 429) {
+      throw new Error('Too many requests, please try again later.');
+    }
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: data.message };
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: error.message };
+  }
+}
