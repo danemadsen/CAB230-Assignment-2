@@ -6,7 +6,7 @@ import MoviesPage from './pages/MoviesPage';
 import MoviePage from './pages/MoviePage';
 import PersonPage from './pages/PersonPage';
 import ProfilePage from './pages/ProfilePage';
-
+import logo from './logo.svg';
 
 function App() {
   return (
@@ -15,13 +15,13 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/"><img src={logo} alt="Home" width="40" height="40" /></Link> {/* Use the logo.svg image as the link */}
             </li>
             <li>
               <Link to="/movies">Movies</Link>
             </li>
             <li>
-              <Link to="/userprofile">User Profile</Link>
+              <Link to="/userprofile">Profile</Link>
             </li>
           </ul>
         </nav>
@@ -36,6 +36,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;

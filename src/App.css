@@ -1,50 +1,104 @@
-/* LandingPage CSS */
+/* Global CSS */
 
-.landing-page {
+body {
   text-align: center;
+  background-color: white;
+  color: black;
+}
+
+h1{
+  background-color: white;
+  color: #c75c1a;
+}
+
+h2{
+  background-color: white;
+  color: #f37021;
+}
+
+p {
+  background-color: white;
+  color: #0066b9;
+}
+
+nav {
+  background-color: #003c72ff;
+  padding: 0.25rem 0;
+  display: flex;
+  align-items: center; /* Add this line to center the content vertically */
+}
+
+nav img {
+  height: 40px;
+  width: auto;
 }
 
 nav ul {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   list-style-type: none;
   padding: 0;
+  margin: 0;
+  width: 100%; /* Add this line to ensure the list items are spaced out properly */
 }
 
 nav li {
   margin: 0 1rem;
+  display: flex;
+  align-items: center; /* Add this line to center the text vertically */
+}
+
+nav li a {
+  font-size: 1.2rem; /* Make the link text bigger */
+  text-decoration: none; /* Remove the underline */
+}
+
+nav li a:hover {
+  text-decoration: underline; /* Show the underline when the user hovers over the link */
+}
+
+
+nav li a:visited {
+  color: white;
 }
 
 /* MoviesPage CSS */
-table {
+.movies-page {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.movies-page label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #0066b9;
+}
+
+.movies-page table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-th, td {
+.movies-page th, td {
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 3px solid #456386;
 }
 
-th {
+.movies-page th {
   text-align: left;
-  background-color: #f2f2f2;
+  background-color: rgb(8, 81, 145);
+  color: #f37021; /* Text color for table header */
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+.movies-page tr {
+  color: #0066b9;
 }
 
-tr:hover {
-  background-color: #ddd;
+.movies-page tr:hover {
+  background-color: #90dfff;
   cursor: pointer;
-}
-
-.movies-page {
-  max-width: 80%;
-  margin: 0 auto;
 }
 
 .search-form {
@@ -78,4 +132,13 @@ tr:hover {
 .movie-page ul {
   list-style-type: none;
   padding: 0;
+  color: #0066b9;
+}
+
+/* Add this new class to App.css */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }

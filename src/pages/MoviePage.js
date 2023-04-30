@@ -20,18 +20,26 @@ function MoviePage() {
           <img src={movie.poster} alt={`${movie.title} poster`} />
           <h1>{movie.title}</h1>
           <p>Year: {movie.year}</p>
-          <p>IMDb Rating: {movie.ratings.find(rating => rating.source === "Internet Movie Database")?.value}</p>
           <p>Box Office: ${movie.boxoffice.toLocaleString()}</p>
           <p>Runtime: {movie.runtime} minutes</p>
           <p>Genres: {movie.genres.join(', ')}</p>
           <p>Country: {movie.country}</p>
-          <p>Plot: {movie.plot}</p>
-          <h2>Principals:</h2>
+          <h2>Plot: </h2>
+          <p>{movie.plot}</p>
+          <h2>Cast:</h2>
           <ul>
             {movie.principals.map(principal => (
               <li key={principal.id}>
                 {principal.name} ({principal.category})
                 {principal.characters.length > 0 ? ` - ${principal.characters.join(', ')}` : ''}
+              </li>
+            ))}
+          </ul>
+          <h2>Ratings:</h2>
+          <ul>
+            {movie.ratings.map(rating => (
+              <li key={rating.source}>
+                {rating.source}: {rating.value}
               </li>
             ))}
           </ul>
