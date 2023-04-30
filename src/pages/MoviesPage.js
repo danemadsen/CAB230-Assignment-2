@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchMovies } from '../API';
+import { GET_Movies } from '../API';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
@@ -21,7 +21,7 @@ function MoviesPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetchMovies(year, title, currentPage)
+    GET_Movies(year, title, currentPage)
       .then(({ data, pagination }) => {
         setMovies(data);
         setTotalPages(pagination.lastPage);
@@ -30,7 +30,7 @@ function MoviesPage() {
   };
 
   React.useEffect(() => {
-    fetchMovies(year, title, currentPage)
+    GET_Movies(year, title, currentPage)
       .then(({ data, pagination }) => {
         setMovies(data);
         setTotalPages(pagination.lastPage);

@@ -1,6 +1,6 @@
 const API_ADDRESS = 'http://sefdb02.qut.edu.au:3000';
 
-export const fetchMovies = async (year, title, page = 1) => {
+export const GET_Movies = async (year, title, page = 1) => {
   try {
     const response = await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}&page=${page}`);
     
@@ -22,7 +22,7 @@ export const fetchMovies = async (year, title, page = 1) => {
   }
 };
 
-export const fetchMovie = async (id) => {
+export const GET_Movie = async (id) => {
   try {
     const response = await fetch(`${API_ADDRESS}/movies/data/${id}`);
     
@@ -44,19 +44,30 @@ export const fetchMovie = async (id) => {
   }
 };
 
-export const fetchPerson = async (id) => {
+export const GET_Person = async (id) => {
   try {
     const response = await fetch(`${API_ADDRESS}/people/${id}`);
+    
+    if (response.status === 429) {
+      throw new Error('Too many requests, please try again later.');
+    }
+
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
     console.log(data); // log the response data to see what's returned
-    return data.results;
+    return data;
   } catch (error) {
     console.error(error);
-    return null;
+    return { error: error.message };
   }
-}
+};
 
-export const registerUser = async (email, password) => {
+
+export const POST_Register = async (email, password) => {
   try {
     const response = await fetch(`${API_ADDRESS}/user/register`, {
       method: 'POST',
