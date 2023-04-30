@@ -17,7 +17,7 @@ export const fetchMovie = async (id) => {
     const response = await fetch(`${API_ADDRESS}/movies/data/${id}`);
     const data = await response.json();
     console.log(data); // log the response data to see what's returned
-    return data.results;
+    return data;
   } catch (error) {
     console.error(error);
     return null;
@@ -26,7 +26,7 @@ export const fetchMovie = async (id) => {
 
 export const fetchPerson = async (id) => {
   try {
-    const response = await fetch(`${API_ADDRESS}/people/data/${id}`);
+    const response = await fetch(`${API_ADDRESS}/people/${id}`);
     const data = await response.json();
     console.log(data); // log the response data to see what's returned
     return data.results;
