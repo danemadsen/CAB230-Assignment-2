@@ -86,7 +86,7 @@ function MoviesPage() {
                 <td>{movie.title}</td>
                 <td>{movie.year}</td>
                 <td>{movie.imdbRating}</td>
-                <td>{movie.rottentomatoesRating}</td>
+                <td>{movie.rottenTomatoesRating}</td>
                 <td>{movie.metacriticRating}</td>
                 <td>{movie.classification}</td>
               </tr>
