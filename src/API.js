@@ -5,7 +5,7 @@ export const fetchMovies = async (year, title) => {
     const response = await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}`);
     const data = await response.json();
     console.log(data); // log the response data to see what's returned
-    return data.results;
+    return data.data; // Access the correct property containing the movie array
   } catch (error) {
     console.error(error);
     return [];
