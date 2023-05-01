@@ -1,22 +1,20 @@
 const API_ADDRESS = 'http://sefdb02.qut.edu.au:3000';
 
+async function checkError(response) {
+  if (response.status === 429) throw new Error('Too many requests, please try again later.');
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  console.log(data);
+  return data;
+}
+
 export const GET_Movies = async (year, title, page = 1) => {
   try {
-    const response = await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}&page=${page}`);
-    
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-
-    console.log(data); // log the response data to see what's returned
-    return data; // Return the whole data object to access pagination data as well
-  } catch (error) {
+    return await checkError(await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}&page=${page}`));
+  } 
+  catch (error) {
     console.error(error);
     return { data: [], pagination: {}, error: error.message };
   }
@@ -24,21 +22,9 @@ export const GET_Movies = async (year, title, page = 1) => {
 
 export const GET_Movie = async (id) => {
   try {
-    const response = await fetch(`${API_ADDRESS}/movies/data/${id}`);
-    
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-
-    console.log(data); // log the response data to see what's returned
-    return data;
-  } catch (error) {
+    return await checkError(await fetch(`${API_ADDRESS}/movies/data/${id}`));
+  } 
+  catch (error) {
     console.error(error);
     return { error: error.message };
   }
@@ -46,21 +32,9 @@ export const GET_Movie = async (id) => {
 
 export const GET_Person = async (id) => {
   try {
-    const response = await fetch(`${API_ADDRESS}/people/${id}`);
-    
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-
-    console.log(data); // log the response data to see what's returned
-    return data;
-  } catch (error) {
+    return await checkError(await fetch(`${API_ADDRESS}/people/${id}`));
+  } 
+  catch (error) {
     console.error(error);
     return { error: error.message };
   }
@@ -71,24 +45,13 @@ export const POST_Register = async (email, password) => {
   try {
     const response = await fetch(`${API_ADDRESS}/user/register`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, message: data.message };
-    } else {
-      throw new Error(data.message);
-    }
-  } catch (error) {
+    const data = await checkError(response);
+    return { success: true, message: data.message }; 
+  } 
+  catch (error) {
     console.error(error);
     return { success: false, message: error.message };
   }
@@ -103,26 +66,19 @@ export const POST_Login = async (email, password, longExpiry = false) => {
       },
       body: JSON.stringify({ email, password, longExpiry }),
     });
-
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
-    } else {
-      throw new Error(data.message);
-    }
-  } catch (error) {
+    const data = await checkError(response);
+    return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+  } 
+  catch (error) {
     console.error(error);
     return { success: false, message: error.message };
   }
 };
 
-export const POST_Refresh = async (refreshToken) => {
+export const POST_Refresh = async () => {
   try {
+    const refreshToken = localStorage.getItem('refreshToken');
+
     const response = await fetch(`${API_ADDRESS}/user/refresh`, {
       method: 'POST',
       headers: {
@@ -130,26 +86,19 @@ export const POST_Refresh = async (refreshToken) => {
       },
       body: JSON.stringify({ refreshToken }),
     });
-
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
-    } else {
-      throw new Error(data.message);
-    }
-  } catch (error) {
+    const data = await checkError(response);
+    return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+  } 
+  catch (error) {
     console.error(error);
     return { success: false, message: error.message };
   }
 };
 
-export const POST_Logout = async (refreshToken) => {
+export const POST_Logout = async () => {
   try {
+    const refreshToken = localStorage.getItem('refreshToken');
+
     const response = await fetch(`${API_ADDRESS}/user/logout`, {
       method: 'POST',
       headers: {
@@ -157,20 +106,11 @@ export const POST_Logout = async (refreshToken) => {
       },
       body: JSON.stringify({ refreshToken }),
     });
-
-    if (response.status === 429) {
-      throw new Error('Too many requests, please try again later.');
-    }
-
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, message: data.message };
-    } else {
-      throw new Error(data.message);
-    }
-  } catch (error) {
+    const data = await checkError(response);
+    return { success: true, message: data.message };
+  } 
+  catch (error) {
     console.error(error);
     return { success: false, message: error.message };
   }
-}
+};

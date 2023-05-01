@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { GET_Movie } from '../API';
 import '../App.css';
 
@@ -30,7 +30,10 @@ function MoviePage() {
           <ul>
             {movie.principals.map(principal => (
               <li key={principal.id}>
-                {principal.name} ({principal.category})
+                <Link to={`/people/${principal.id}`}>
+                  {principal.name}
+                </Link>
+                ({principal.category})
                 {principal.characters.length > 0 ? ` - ${principal.characters.join(', ')}` : ''}
               </li>
             ))}

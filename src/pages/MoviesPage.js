@@ -1,6 +1,6 @@
 import React from 'react';
 import { GET_Movies } from '../API';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../App.css';
 
 function MoviesPage() {
@@ -9,7 +9,6 @@ function MoviesPage() {
   const [title, setTitle] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(null);
-  const navigate = useNavigate();
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
@@ -37,10 +36,6 @@ function MoviesPage() {
       })
       .catch(error => console.log(error));
   }, [year, title, currentPage]);
-
-  const handleMovieRowClick = (imdbID) => {
-    navigate(`/movies/data/${imdbID}`);
-  };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -82,8 +77,10 @@ function MoviesPage() {
           </thead>
           <tbody>
             {movies.map(movie => (
-              <tr key={movie.id} onClick={() => handleMovieRowClick(movie.imdbID)}>
-                <td>{movie.title}</td>
+              <tr key={movie.id}>
+                <td>
+                  <Link to={`/movies/data/${movie.imdbID}`}>{movie.title}</Link>
+                </td>
                 <td>{movie.year}</td>
                 <td>{movie.imdbRating}</td>
                 <td>{movie.rottenTomatoesRating}</td>
