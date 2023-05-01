@@ -32,14 +32,19 @@ export const getMovie = async (id) => {
 
 export const getPerson = async (id) => {
   try {
-    return await checkError(await fetch(`${API_ADDRESS}/people/${id}`));
+    const response = await fetch(`${API_ADDRESS}/people/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    return await checkError(response);
   } 
   catch (error) {
     console.error(error);
     return { error: error.message };
   }
 };
-
 
 export const postRegister = async (email, password) => {
   try {

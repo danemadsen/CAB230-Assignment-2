@@ -21,6 +21,12 @@ p {
   color: #0066b9;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  color: #0066b9;
+}
+
 nav {
   background-color: #003c72ff;
   padding: 0.25rem 0;
@@ -121,19 +127,6 @@ nav li a:visited {
   gap: 10px;
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-
-/* MoviePage CSS */
-.movie-page {
-  text-align: center;
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-.movie-page ul {
-  list-style-type: none;
-  padding: 0;
-  color: #0066b9;
 }
 
 /* Add this new class to App.css */
