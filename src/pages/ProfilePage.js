@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { POST_Login, POST_Register, POST_Logout } from '../API';
+import { postLogin, postRegister, postLogout } from '../API';
 import '../App.css'
 
 const ProfilePage = () => {
@@ -17,7 +17,7 @@ const ProfilePage = () => {
   }, []);
 
   const handleLogin = async () => {
-    const result = await POST_Login(email, password);
+    const result = await postLogin(email, password);
     if (result.success) {
       // Store the access tokens in localStorage or another secure place
       localStorage.setItem('accessToken', result.bearerToken.token);
@@ -33,7 +33,7 @@ const ProfilePage = () => {
       alert('Passwords do not match');
       return;
     }
-    const result = await POST_Register(email, password);
+    const result = await postRegister(email, password);
     if (result.success) {
       setIsRegister(false);
       alert('Registration successful, please log in');
@@ -44,7 +44,7 @@ const ProfilePage = () => {
 
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
-    const result = await POST_Logout(refreshToken);
+    const result = await postLogout(refreshToken);
     if (result.success) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');

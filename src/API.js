@@ -10,7 +10,7 @@ async function checkError(response) {
   return data;
 }
 
-export const GET_Movies = async (year, title, page = 1) => {
+export const getMovies = async (year, title, page = 1) => {
   try {
     return await checkError(await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}&page=${page}`));
   } 
@@ -20,7 +20,7 @@ export const GET_Movies = async (year, title, page = 1) => {
   }
 };
 
-export const GET_Movie = async (id) => {
+export const getMovie = async (id) => {
   try {
     return await checkError(await fetch(`${API_ADDRESS}/movies/data/${id}`));
   } 
@@ -30,7 +30,7 @@ export const GET_Movie = async (id) => {
   }
 };
 
-export const GET_Person = async (id) => {
+export const getPerson = async (id) => {
   try {
     return await checkError(await fetch(`${API_ADDRESS}/people/${id}`));
   } 
@@ -41,7 +41,7 @@ export const GET_Person = async (id) => {
 };
 
 
-export const POST_Register = async (email, password) => {
+export const postRegister = async (email, password) => {
   try {
     const response = await fetch(`${API_ADDRESS}/user/register`, {
       method: 'POST',
@@ -57,7 +57,7 @@ export const POST_Register = async (email, password) => {
   }
 };
 
-export const POST_Login = async (email, password, longExpiry = false) => {
+export const postLogin = async (email, password, longExpiry = false) => {
   try {
     const response = await fetch(`${API_ADDRESS}/user/login`, {
       method: 'POST',
@@ -75,7 +75,7 @@ export const POST_Login = async (email, password, longExpiry = false) => {
   }
 };
 
-export const POST_Refresh = async () => {
+export const postRefresh = async () => {
   try {
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -95,7 +95,7 @@ export const POST_Refresh = async () => {
   }
 };
 
-export const POST_Logout = async () => {
+export const postLogout = async () => {
   try {
     const refreshToken = localStorage.getItem('refreshToken');
 

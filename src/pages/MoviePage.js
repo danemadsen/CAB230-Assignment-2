@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom'; // Import Link from react-router-dom
-import { GET_Movie } from '../API';
+import { getMovie } from '../API';
 import '../App.css';
 
 function MoviePage() {
@@ -8,7 +8,7 @@ function MoviePage() {
   const [movie, setMovie] = React.useState(null);
   
   React.useEffect(() => {
-    GET_Movie(id)
+    getMovie(id)
       .then(results => setMovie(results))
       .catch(error => console.log(error));
   }, [id]);
