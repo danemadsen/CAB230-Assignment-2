@@ -1,111 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AgGridReact } from 'ag-grid-react';
+import { useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import '../App.css';
 
 function MoviesPage() {
-  const [movies, setMovies] = React.useState([]);
-  const [year, setYear] = React.useState('1996');
-  const [title, setTitle] = React.useState('');
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [totalPages, setTotalPages] = React.useState(null);
+  const [movies, setMovies] = useState([]);
+  const [gridApi, setGridApi] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const title = searchParams.get('title');
+  const year = searchParams.get('year');
 
-  const handleYearChange = (event) => {
-    setYear(event.target.value);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await getMovies(title, year);
+      setMovies(response.data);
+    };
+    fetchMovies();
+  }, [title, year]);
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
   };
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
+  const onRowClicked = (params) => {
+    const movieId = params.data.id;
+    navigate(`/movies/data/${movieId}`);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    getMovies(year, title, currentPage)
-      .then(({ data, pagination }) => {
-        setMovies(data);
-        setTotalPages(pagination.lastPage);
-      })
-      .catch(error => console.log(error));
+  const onGridSizeChanged = () => {
+    gridApi.sizeColumnsToFit();
   };
 
-  React.useEffect(() => {
-    getMovies(year, title, currentPage)
-      .then(({ data, pagination }) => {
-        setMovies(data);
-        setTotalPages(pagination.lastPage);
-      })
-      .catch(error => console.log(error));
-  }, [year, title, currentPage]);
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  const columnDefs = [
+    { field: 'title', headerName: 'Title', minWidth: 200, flex: 1 },
+    { field: 'release_date', headerName: 'Release Date', minWidth: 150, flex: 1 },
+    { field: 'vote_average', headerName: 'Rating', minWidth: 100, flex: 1 },
+  ];
 
   return (
     <div className="movies-page">
-      <h1 style={{ textAlign: 'center' }}>Movies</h1>
-      <form onSubmit={handleSubmit} className="search-form">
-        <div>
-          <label htmlFor="title-input">Search by Title:</label>
-          <input id="title-input" type="text" value={title} onChange={handleTitleChange} />
-        </div>
-        <div>
-          <label htmlFor="year-input">Search by Year:</label>
-          <input id="year-input" type="text" value={year} onChange={handleYearChange} />
-        </div>
-        <button type="submit">Search</button>
-      </form>
-      {movies.length > 0 ? (
-        <table className="movies-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Year</th>
-              <th>IMDb Rating</th>
-              <th>Rotten Tomatoes Rating</th>
-              <th>Metacritic Rating</th>
-              <th>Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            {movies.map(movie => (
-              <tr key={movie.id}>
-                <td>
-                  <Link to={`/movies/data/${movie.imdbID}`}>{movie.title}</Link>
-                </td>
-                <td>{movie.year}</td>
-                <td>{movie.imdbRating}</td>
-                <td>{movie.rottenTomatoesRating}</td>
-                <td>{movie.metacriticRating}</td>
-                <td>{movie.classification}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Loading....</p>
-      )}
-      <div className="pagination">
-        <button className="prev-button" onClick={handlePrevPage} disabled={currentPage === 1}>
-          Prev
-        </button>
-        <span>
-          {currentPage} / {totalPages}
-        </span>
-        <button className="next-button" onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
+      <h1>Movies</h1>
+      <div className="ag-theme-custom">
+        <AgGridReact
+          rowData={movies}
+          onGridReady={onGridReady}
+          onRowClicked={onRowClicked}
+          onGridSizeChanged={onGridSizeChanged}
+          rowModelType="infinite"
+          pagination={true}
+          paginationPageSize={50}
+          cacheBlockSize={50}
+          columnDefs={columnDefs}
+        ></AgGridReact>
       </div>
     </div>
-  );  
+  );
 }
 
 export default MoviesPage;

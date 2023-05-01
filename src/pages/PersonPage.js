@@ -50,7 +50,7 @@ function PersonPage() {
           <ul>
             {person.roles.map((role, index) => (
               <li key={index}>
-                <Link to={`/movies/data/${role.movieId}`} style={{ color: 'blue' }}>
+                <Link to={`/movies/data/${role.movieId}`}>
                   {role.movieName}
                 </Link>{' '}
                 as {role.characters.join(', ')} ({role.category})

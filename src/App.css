@@ -31,7 +31,8 @@ nav {
   background-color: #003c72ff;
   padding: 0.25rem 0;
   display: flex;
-  align-items: center; /* Add this line to center the content vertically */
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
@@ -42,31 +43,45 @@ nav img {
 
 nav ul {
   display: flex;
-  justify-content: space-between;
   list-style-type: none;
-  padding: 0;
   margin: 0;
-  width: 100%; /* Add this line to ensure the list items are spaced out properly */
+  padding: 0;
 }
 
 nav li {
-  margin: 0 1rem;
   display: flex;
-  align-items: center; /* Add this line to center the text vertically */
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
 }
 
 nav li a {
-  font-size: 1.2rem; /* Make the link text bigger */
-  text-decoration: none; /* Remove the underline */
+  font-size: 1.2rem;
+  text-decoration: none;
 }
 
 nav li a:hover {
-  text-decoration: underline; /* Show the underline when the user hovers over the link */
+  text-decoration: underline;
 }
-
 
 nav li a:visited {
   color: white;
+}
+
+nav input {
+  margin-left: 5px;
+  width: 20rem;
+  height: 2rem;
+}
+
+.search-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-inputs input {
+  margin: 0 0.5rem;
 }
 
 /* MoviesPage CSS */
@@ -96,7 +111,7 @@ nav li a:visited {
 .movies-page th {
   text-align: left;
   background-color: rgb(8, 81, 145);
-  color: #f37021; /* Text color for table header */
+  color: #f37021;
 }
 
 .movies-page tr {
@@ -129,10 +144,41 @@ nav li a:visited {
   margin-bottom: 1rem;
 }
 
-/* Add this new class to App.css */
 .profile-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+.ag-theme-custom {
+  height: 600px;
+  width: 100%;
+}
+
+.ag-theme-custom .ag-header-cell {
+  background-color: rgb(8, 81, 145);
+  color: #f37021;
+}
+
+.ag-theme-custom .ag-header-cell-label {
+  color: #f37021;
+  font-weight: bold;
+}
+
+.ag-theme-custom .ag-cell {
+  border-right: 1px solid #d9e2ee;
+}
+
+.ag-theme-custom .ag-row {
+  color: #0066b9;
+}
+
+.ag-theme-custom .ag-row:hover {
+  background-color: #90dfff;
+  cursor: pointer;
+}
+
+.ag-theme-custom .ag-paging-panel {
+  border-top: 1px solid #d9e2ee;
 }
