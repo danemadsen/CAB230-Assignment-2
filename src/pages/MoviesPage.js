@@ -1,63 +1,104 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AgGridReact } from 'ag-grid-react';
 import { useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
 
-function MoviesPage() {
-  const [movies, setMovies] = useState([]);
-  const [gridApi, setGridApi] = useState(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const title = searchParams.get('title');
-  const year = searchParams.get('year');
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await getMovies(title, year);
-      setMovies(response.data);
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
     };
-    fetchMovies();
-  }, [title, year]);
+  }, [value, delay]);
 
-  const onGridReady = (params) => {
-    setGridApi(params.api);
+  return debouncedValue;
+}
+
+function MoviesPage() {
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = React.useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const searchParams = new URLSearchParams(location.search);
+  const title = useDebounce(searchParams.get('title') || '', 500);
+  const year = useDebounce(searchParams.get('year') || '', 500);
+
+  useEffect(() => {
+    getMovies(year, title, page)
+    .then(({ data, pagination }) => {
+      setMovies(data);
+      setTotalPages(pagination.lastPage);
+    })
+    .catch(error => console.log(error));
+  }, [year, title, page]);
+
+  const handleMovieRowClick = (imdbID) => {
+    navigate(`/movies/data/${imdbID}`);
   };
 
-  const onRowClicked = (params) => {
-    const movieId = params.data.id;
-    navigate(`/movies/data/${movieId}`);
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
   };
 
-  const onGridSizeChanged = () => {
-    gridApi.sizeColumnsToFit();
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
   };
-
-  const columnDefs = [
-    { field: 'title', headerName: 'Title', minWidth: 200, flex: 1 },
-    { field: 'release_date', headerName: 'Release Date', minWidth: 150, flex: 1 },
-    { field: 'vote_average', headerName: 'Rating', minWidth: 100, flex: 1 },
-  ];
 
   return (
     <div className="movies-page">
-      <h1>Movies</h1>
-      <div className="ag-theme-custom">
-        <AgGridReact
-          rowData={movies}
-          onGridReady={onGridReady}
-          onRowClicked={onRowClicked}
-          onGridSizeChanged={onGridSizeChanged}
-          rowModelType="infinite"
-          pagination={true}
-          paginationPageSize={50}
-          cacheBlockSize={50}
-          columnDefs={columnDefs}
-        ></AgGridReact>
+      {movies.length > 0 ? (
+        <table className="movies-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>IMDb Rating</th>
+              <th>Rotten Tomatoes Rating</th>
+              <th>Metacritic Rating</th>
+              <th>Classification</th>
+            </tr>
+          </thead>
+          <tbody>
+            {movies.map(movie => (
+              <tr key={movie.id} onClick={() => handleMovieRowClick(movie.imdbID)}>
+                <td>{movie.title}</td>
+                <td>{movie.year}</td>
+                <td>{movie.imdbRating}</td>
+                <td>{movie.rottenTomatoesRating}</td>
+                <td>{movie.metacriticRating}</td>
+                <td>{movie.classification}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>Loading....</p>
+      )}
+      <div className="pagination">
+        <button className="prev-button" onClick={handlePrevPage} disabled={page === 1}>
+          Prev
+        </button>
+        <span>
+          {page} / {totalPages}
+        </span>
+        <button className="next-button" onClick={handleNextPage} disabled={page === totalPages}>
+          Next
+        </button>
       </div>
     </div>
-  );
+  );  
 }
 
 export default MoviesPage;
