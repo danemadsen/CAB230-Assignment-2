@@ -4,16 +4,26 @@ import { useNavigate } from 'react-router-dom';
 function SearchInputs() {
   const [searchTitle, setSearchTitle] = useState('');
   const [searchYear, setSearchYear] = useState('');
+  const [shouldNavigate, setShouldNavigate] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleTitleChange = (event) => setSearchTitle(event.target.value);
+  const handleTitleChange = (event) => {
+    setSearchTitle(event.target.value);
+    setShouldNavigate(true);
+  };
 
-  const handleYearChange = (event) => setSearchYear(event.target.value);
+  const handleYearChange = (event) => {
+    setSearchYear(event.target.value);
+    setShouldNavigate(true);
+  };
 
   useEffect(() => {
-    if (searchTitle || searchYear) navigate(`/movies?title=${searchTitle}&year=${searchYear}`);
-  }, [searchTitle, searchYear, navigate]);
+    if (shouldNavigate) {
+      navigate(`/movies?title=${searchTitle}&year=${searchYear}`);
+      setShouldNavigate(false);
+    }
+  }, [searchTitle, searchYear, navigate, shouldNavigate]);
 
   return (
     <div className="search-inputs">

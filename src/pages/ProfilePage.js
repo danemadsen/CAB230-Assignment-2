@@ -18,14 +18,8 @@ const ProfilePage = () => {
 
   const handleLogin = async () => {
     const result = await postLogin(email, password);
-    if (result.success) {
-      // Store the access tokens in localStorage or another secure place
-      localStorage.setItem('accessToken', result.bearerToken.token);
-      localStorage.setItem('refreshToken', result.refreshToken.token);
-      setAuthStatus(true);
-    } else {
-      alert(result.message);
-    }
+    if (result.success) setAuthStatus(true);
+    else alert(result.message);
   };
 
   const handleRegister = async () => {
@@ -36,8 +30,9 @@ const ProfilePage = () => {
     const result = await postRegister(email, password);
     if (result.success) {
       setIsRegister(false);
-      alert('Registration successful, please log in');
-    } else {
+      handleLogin();
+    } 
+    else {
       alert(result.message);
     }
   };
@@ -45,13 +40,8 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
     const result = await postLogout(refreshToken);
-    if (result.success) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      setAuthStatus(false);
-    } else {
-      alert(result.message);
-    }
+    if (result.success) setAuthStatus(false);
+    else alert(result.message);
   };
 
   if (authStatus) {

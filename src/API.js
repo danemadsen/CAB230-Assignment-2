@@ -1,10 +1,13 @@
 const API_ADDRESS = 'http://sefdb02.qut.edu.au:3000';
 
 async function checkError(response) {
-  if (response.status === 429) throw new Error('Too many requests, please try again later.');
+  if (response.status === 429) throw new Error('429 - Too many requests, please try again later.');
 
   const data = await response.json();
-  if (!response.ok) throw new Error(data.message);
+  if (!response.ok) {
+    console.log(response.status)
+    throw new Error(response.status + ' - ' + data.message);
+  }
 
   console.log(data);
   return data;
@@ -32,10 +35,12 @@ export const getMovie = async (id) => {
 
 export const getPerson = async (id) => {
   try {
+    const accessToken = localStorage.getItem('accessToken');
+    
     const response = await fetch(`${API_ADDRESS}/people/${id}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        'Authorization': `Bearer ${accessToken}`,
       },
     });
     return await checkError(response);
@@ -72,7 +77,9 @@ export const postLogin = async (email, password, longExpiry = false) => {
       body: JSON.stringify({ email, password, longExpiry }),
     });
     const data = await checkError(response);
-    return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+    localStorage.setItem('accessToken', data.bearerToken.token);
+    localStorage.setItem('refreshToken', data.refreshToken.token);
+    return { success: true };
   } 
   catch (error) {
     console.error(error);
@@ -82,12 +89,15 @@ export const postLogin = async (email, password, longExpiry = false) => {
 
 export const postRefresh = async () => {
   try {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = await localStorage.getItem('refreshToken');
+
+    if (!refreshToken) throw new Error('Refresh token not found');
 
     const response = await fetch(`${API_ADDRESS}/user/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${refreshToken}`,
       },
       body: JSON.stringify({ refreshToken }),
     });
@@ -99,6 +109,7 @@ export const postRefresh = async () => {
     return { success: false, message: error.message };
   }
 };
+
 
 export const postLogout = async () => {
   try {
@@ -112,6 +123,8 @@ export const postLogout = async () => {
       body: JSON.stringify({ refreshToken }),
     });
     const data = await checkError(response);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     return { success: true, message: data.message };
   } 
   catch (error) {

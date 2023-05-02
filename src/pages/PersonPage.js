@@ -1,33 +1,39 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getPerson, postRefresh } from '../API';
 
 function PersonPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [person, setPerson] = React.useState(null);
   const [error, setError] = React.useState(null);
+  const [showPopup, setShowPopup] = React.useState(false);
 
   React.useEffect(() => {
+    let tryCount = 0;
     async function fetchData() {
       const data = await getPerson(id);
       if (data.error) {
-        if (data.error === 'JWT Token expired') {
-          const result = await postRefresh();
-
-          if (result.accessToken) localStorage.setItem('accessToken', result.accessToken);
-          else setError(result.error || 'Failed to refresh token');
-
-          const refreshedData = await getPerson(id);
-          if (refreshedData.error) setError(refreshedData.error);
-          else setPerson(refreshedData);
+        if (data.error.includes('401')) {
+          tryCount++;
+          if (tryCount < 3) {
+            postRefresh();
+            fetchData();
+          } 
+          else setShowPopup(true);
         } 
         else setError(data.error);
       } 
       else setPerson(data);
     }
     fetchData();
-  }, [id]);
+  }, [id, navigate]);
+
+  const handlePopupOk = () => {
+    setShowPopup(false);
+    navigate('/profile');
+  };
 
   if (error) {
     return (
@@ -60,6 +66,14 @@ function PersonPage() {
         </div>
       ) : (
         <p>Loading...</p>
+      )}
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-inner">
+            <p>You must be a logged in user to view the pages of cast members.</p>
+            <button onClick={handlePopupOk}>OK</button>
+          </div>
+        </div>
       )}
     </div>
   );
