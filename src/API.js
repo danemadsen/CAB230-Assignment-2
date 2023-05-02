@@ -1,15 +1,10 @@
 const API_ADDRESS = 'http://sefdb02.qut.edu.au:3000';
 
+// Used to check if the response contains an error and handle it accordingly
 async function checkError(response) {
   if (response.status === 429) throw new Error('429 - Too many requests, please try again later.');
-
   const data = await response.json();
-  if (!response.ok) {
-    console.log(response.status)
-    throw new Error(response.status + ' - ' + data.message);
-  }
-
-  console.log(data);
+  if (!response.ok) throw new Error(response.status + ' - ' + data.message);
   return data;
 }
 
@@ -19,7 +14,7 @@ async function getMovies(year, title, page = 1){
   } 
   catch (error) {
     console.error(error);
-    return { data: [], pagination: {}, error: error.message };
+    return { error: error.message };
   }
 };
 
