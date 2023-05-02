@@ -13,7 +13,7 @@ async function checkError(response) {
   return data;
 }
 
-export const getMovies = async (year, title, page = 1) => {
+async function getMovies(year, title, page = 1){
   try {
     return await checkError(await fetch(`${API_ADDRESS}/movies/search?year=${year}&title=${title}&page=${page}`));
   } 
@@ -23,7 +23,7 @@ export const getMovies = async (year, title, page = 1) => {
   }
 };
 
-export const getMovie = async (id) => {
+async function getMovie(id){
   try {
     return await checkError(await fetch(`${API_ADDRESS}/movies/data/${id}`));
   } 
@@ -33,7 +33,7 @@ export const getMovie = async (id) => {
   }
 };
 
-export const getPerson = async (id) => {
+async function getPerson(id){
   try {
     const accessToken = localStorage.getItem('accessToken');
     
@@ -51,7 +51,7 @@ export const getPerson = async (id) => {
   }
 };
 
-export const postRegister = async (email, password) => {
+async function postRegister(email, password){
   try {
     const response = await fetch(`${API_ADDRESS}/user/register`, {
       method: 'POST',
@@ -67,7 +67,7 @@ export const postRegister = async (email, password) => {
   }
 };
 
-export const postLogin = async (email, password, longExpiry = false) => {
+async function postLogin(email, password, longExpiry = false){
   try {
     const response = await fetch(`${API_ADDRESS}/user/login`, {
       method: 'POST',
@@ -87,7 +87,7 @@ export const postLogin = async (email, password, longExpiry = false) => {
   }
 };
 
-export const postRefresh = async () => {
+async function postRefresh(){
   try {
     const refreshToken = await localStorage.getItem('refreshToken');
 
@@ -111,7 +111,7 @@ export const postRefresh = async () => {
 };
 
 
-export const postLogout = async () => {
+async function postLogout(){
   try {
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -132,3 +132,5 @@ export const postLogout = async () => {
     return { success: false, message: error.message };
   }
 };
+
+export { getMovies, getMovie, getPerson, postRegister, postLogin, postRefresh, postLogout };
