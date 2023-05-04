@@ -191,8 +191,8 @@ nav input {
   flex-direction: column;
 }
 
-.carousel .control-dots {
-  margin-top: 10px;
+.carousel .control-dots .dot:hover, .carousel .control-dots .dot.selected {
+  background: #f37021;
 }
 
 .carousel-slide {

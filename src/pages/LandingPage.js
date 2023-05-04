@@ -11,13 +11,13 @@ function LandingPage() {
   useEffect(() => {
     const fetchTopMovies = async () => {
       try {
-        const { data } = await getMovies(2022, '', 1);
+        const { data } = await getMovies('', '', 1);
 
         const sortedMovies = data.sort(
           (a, b) => parseFloat(b.imdbRating) - parseFloat(a.imdbRating)
         );
 
-        const topSixMovies = sortedMovies.slice(0, 6);
+        const topSixMovies = sortedMovies.slice(0, 10);
 
         const fetchMoviesWithPoster = topSixMovies.map(async (movie) => {
           const movieDetails = await getMovie(movie.imdbID);
