@@ -5,6 +5,7 @@ import { getMovies } from '../API';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import '../App.css';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -35,13 +36,13 @@ function MoviesPage() {
   };
 
   const columnDefs = [
-    { headerName: 'Title', field: 'title', sortable: true },
-    { headerName: 'Year', field: 'year', sortable: true },
-    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true },
-    { headerName: 'Rotten Tomatoes Rating', field: 'rottenTomatoesRating', sortable: true },
-    { headerName: 'Metacritic Rating', field: 'metacriticRating', sortable: true },
-    { headerName: 'Classification', field: 'classification', sortable: true },
-  ];
+    { headerName: 'Title', field: 'title', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Year', field: 'year', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Rotten Tomatoes Rating', field: 'rottenTomatoesRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Metacritic Rating', field: 'metacriticRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Classification', field: 'classification', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+  ];  
 
   const [rowData, setRowData] = useState([]);
 
@@ -60,21 +61,16 @@ function MoviesPage() {
     onRowClicked: handleMovieRowClick,
     rowSelection: 'single',
     rowData: rowData,
+    rowHeight: 50,
   };
 
   return (
-    <div className="movies-page" style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div
-        className="ag-theme-alpine"
-        style={{
-          flex: 1,
-          width: '100%',
-        }}
-      >
+    <div className="movies-page">
+      <div className="ag-theme-alpine" style={{ flex: 1 }}>
         <AgGridReact {...gridOptions} />
       </div>
     </div>
-  );
+  );  
 }
 
 export default MoviesPage;
