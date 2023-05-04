@@ -124,6 +124,8 @@ async function postLogout(){
   } 
   catch (error) {
     console.error(error);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     return { success: false, message: error.message };
   }
 };
