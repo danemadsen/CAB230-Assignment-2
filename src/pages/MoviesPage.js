@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -20,10 +23,6 @@ function useDebounce(value, delay) {
 }
 
 function MoviesPage() {
-  const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = React.useState(null);
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -31,74 +30,51 @@ function MoviesPage() {
   const title = useDebounce(searchParams.get('title') || '', 500);
   const year = useDebounce(searchParams.get('year') || '', 500);
 
+  const handleMovieRowClick = (event) => {
+    navigate(`/movies/data/${event.data.imdbID}`);
+  };
+
+  const columnDefs = [
+    { headerName: 'Title', field: 'title', sortable: true },
+    { headerName: 'Year', field: 'year', sortable: true },
+    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true },
+    { headerName: 'Rotten Tomatoes Rating', field: 'rottenTomatoesRating', sortable: true },
+    { headerName: 'Metacritic Rating', field: 'metacriticRating', sortable: true },
+    { headerName: 'Classification', field: 'classification', sortable: true },
+  ];
+
+  const [rowData, setRowData] = useState([]);
+
   useEffect(() => {
-    getMovies(year, title, page)
-    .then(({ data, pagination }) => {
-      setMovies(data);
-      setTotalPages(pagination.lastPage);
-    })
-    .catch(error => console.log(error));
-  }, [year, title, page]);
+    getMovies(year, title, 1)
+      .then(({ data }) => {
+        setRowData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [year, title]);
 
-  const handleMovieRowClick = (imdbID) => {
-    navigate(`/movies/data/${imdbID}`);
-  };
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
+  const gridOptions = {
+    columnDefs: columnDefs,
+    onRowClicked: handleMovieRowClick,
+    rowSelection: 'single',
+    rowData: rowData,
   };
 
   return (
-    <div className="movies-page">
-      {movies.length > 0 ? (
-        <table className="movies-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Year</th>
-              <th>IMDb Rating</th>
-              <th>Rotten Tomatoes Rating</th>
-              <th>Metacritic Rating</th>
-              <th>Classification</th>
-            </tr>
-          </thead>
-          <tbody>
-            {movies.map(movie => (
-              <tr key={movie.id} onClick={() => handleMovieRowClick(movie.imdbID)}>
-                <td>{movie.title}</td>
-                <td>{movie.year}</td>
-                <td>{movie.imdbRating}</td>
-                <td>{movie.rottenTomatoesRating}</td>
-                <td>{movie.metacriticRating}</td>
-                <td>{movie.classification}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Loading....</p>
-      )}
-      <div className="pagination">
-        <button className="prev-button" onClick={handlePrevPage} disabled={page === 1}>
-          Prev
-        </button>
-        <span>
-          {page} / {totalPages}
-        </span>
-        <button className="next-button" onClick={handleNextPage} disabled={page === totalPages}>
-          Next
-        </button>
+    <div className="movies-page" style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div
+        className="ag-theme-alpine"
+        style={{
+          flex: 1,
+          width: '100%',
+        }}
+      >
+        <AgGridReact {...gridOptions} />
       </div>
     </div>
-  );  
+  );
 }
 
 export default MoviesPage;

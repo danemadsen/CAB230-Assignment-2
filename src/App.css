@@ -146,37 +146,26 @@ nav input {
   gap: 10px;
 }
 
-.ag-theme-custom {
-  height: 600px;
-  width: 100%;
+.ag-theme-alpine {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
 }
 
-.ag-theme-custom .ag-header-cell {
-  background-color: rgb(8, 81, 145);
-  color: #f37021;
+.ag-theme-alpine .ag-header-cell,
+.ag-theme-alpine .ag-header-group-cell {
+  background-color: #f0f2f5;
+  color: #333;
+  border-style: solid;
+  border-color: #d4d9e1;
+  font-weight: 700;
 }
 
-.ag-theme-custom .ag-header-cell-label {
-  color: #f37021;
-  font-weight: bold;
+.ag-theme-alpine .ag-cell {
+  background-color: #fff;
+  color: #333;
+  border-color: #d4d9e1;
 }
 
-.ag-theme-custom .ag-cell {
-  border-right: 1px solid #d9e2ee;
-}
-
-.ag-theme-custom .ag-row {
-  color: #0066b9;
-}
-
-.ag-theme-custom .ag-row:hover {
-  background-color: #90dfff;
-  cursor: pointer;
-}
-
-.ag-theme-custom .ag-paging-panel {
-  border-top: 1px solid #d9e2ee;
-}
 
 .popup {
   position: fixed;
