@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
 import { MovieCell } from '../components/MovieCell';
-import '../App.css';
+import './MoviesPage.css';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -25,8 +25,8 @@ function MoviesPage() {
   const navigate = useNavigate();
 
   const searchParams = new URLSearchParams(location.search);
-  const title = useDebounce(searchParams.get('title') || '', 500);
-  const year = useDebounce(searchParams.get('year') || '', 500);
+  const title = useDebounce(searchParams.get('title') || '', 1000);
+  const year = useDebounce(searchParams.get('year') || '', 1000);
 
   const [movies, setMovies] = useState([]);
 

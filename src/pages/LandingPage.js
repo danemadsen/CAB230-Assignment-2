@@ -3,6 +3,7 @@ import { getMovies, getMovie } from '../API';
 import { Carousel } from 'react-responsive-carousel';
 import { useNavigate } from 'react-router-dom';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './LandingPage.css';
 
 function LandingPage() {
   const [topMovies, setTopMovies] = useState([]);
