@@ -1,7 +1,8 @@
 import './App.css';
 import logo from './logo.svg';
+import { postRefresh } from './API'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
@@ -12,6 +13,15 @@ import ProfilePage from './pages/ProfilePage';
 import SearchInputs from './components/SearchInputs';
 
 function App() {
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      postRefresh();
+    }, 600000); // 9 minutes
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, []);
+  
   return (
     <BrowserRouter>
       <div>
