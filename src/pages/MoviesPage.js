@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { MovieCell } from '../components/MovieCell';
 import '../App.css';
 
 function useDebounce(value, delay) {
@@ -31,46 +28,38 @@ function MoviesPage() {
   const title = useDebounce(searchParams.get('title') || '', 500);
   const year = useDebounce(searchParams.get('year') || '', 500);
 
-  const handleMovieRowClick = (event) => {
-    navigate(`/movies/data/${event.data.imdbID}`);
-  };
-
-  const columnDefs = [
-    { headerName: 'Title', field: 'title', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-    { headerName: 'Year', field: 'year', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-    { headerName: 'Rotten Tomatoes Rating', field: 'rottenTomatoesRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-    { headerName: 'Metacritic Rating', field: 'metacriticRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-    { headerName: 'Classification', field: 'classification', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
-  ];  
-
-  const [rowData, setRowData] = useState([]);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    getMovies(year, title, 1)
-      .then(({ data }) => {
-        setRowData(data);
-      })
-      .catch((error) => {
+    const fetchMovies = async () => {
+      try {
+        const { data } = await getMovies(year, title, 1);
+        setMovies(data);
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+
+    fetchMovies();
   }, [year, title]);
 
-  const gridOptions = {
-    columnDefs: columnDefs,
-    onRowClicked: handleMovieRowClick,
-    rowSelection: 'single',
-    rowData: rowData,
-    rowHeight: 50,
+  const handleMovieClick = (movieID) => {
+    navigate(`/movies/data/${movieID}`);
   };
 
   return (
     <div className="movies-page">
-      <div className="ag-theme-alpine" style={{ flex: 1 }}>
-        <AgGridReact {...gridOptions} />
+      <div className="movie-grid">
+        {movies.map((movie) => (
+          <MovieCell
+            key={movie.imdbID}
+            movie={movie}
+            onClick={() => handleMovieClick(movie.imdbID)}
+          />
+        ))}
       </div>
     </div>
-  );  
+  );
 }
 
 export default MoviesPage;

@@ -28,6 +28,16 @@ async function getMovie(id){
   }
 };
 
+async function getCombinedMovie(movie){
+  try {
+    return {...movie, ...(await getMovie(movie.imdbID))};
+  } 
+  catch (error) {
+    console.error(error);
+    return { error: error.message };
+  }
+}
+
 async function getPerson(id){
   try {
     const accessToken = localStorage.getItem('accessToken');
@@ -130,4 +140,4 @@ async function postLogout(){
   }
 };
 
-export { getMovies, getMovie, getPerson, postRegister, postLogin, postRefresh, postLogout };
+export { getMovies, getMovie, getCombinedMovie, getPerson, postRegister, postLogin, postRefresh, postLogout };
