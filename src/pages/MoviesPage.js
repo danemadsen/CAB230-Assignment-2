@@ -1,8 +1,11 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
-import { MovieCell } from '../components/MovieCell';
-import './MoviesPage.css';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import '../App.css';
 
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -23,84 +26,63 @@ function useDebounce(value, delay) {
 function MoviesPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(false);
-  const [page, setPage] = useState(1);
 
   const searchParams = new URLSearchParams(location.search);
-  const title = useDebounce(searchParams.get('title') || '', 1000);
-  const year = useDebounce(searchParams.get('year') || '', 1000);
+  const title = useDebounce(searchParams.get('title') || '', 500);
+  const year = useDebounce(searchParams.get('year') || '', 500);
 
-  const [movies, setMovies] = useState([]);
+  const [gridApi, setGridApi] = useState(null);
+
+  const handleMovieRowClick = (event) => {
+    navigate(`/movies/data/${event.data.imdbID}`);
+  };
+
+  const columnDefs = [
+    { headerName: 'Title', field: 'title', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Year', field: 'year', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Rotten Tomatoes Rating', field: 'rottenTomatoesRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Metacritic Rating', field: 'metacriticRating', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+    { headerName: 'Classification', field: 'classification', sortable: true, flex: 1, cellStyle: { textAlign: 'center' } },
+  ];  
 
   useEffect(() => {
-    setMovies([]);
-    setPage(1);
-  }, [year, title]);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      try {
-        const { data } = await getMovies(year, title, page);
-        setMovies((prevMovies) => [...prevMovies, ...data]);
-        setHasMore(data.length > 0);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, [year, title, page]);
-
-  const observer = useRef();
-  const lastMovieElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prevPage) => prevPage + 1);
-        }
+    if (gridApi) {
+      gridApi.setDatasource({
+        getRows: function (params) {
+          getMovies(year, title, params.startRow / 50 + 1)
+            .then(({ data }) => {
+              params.successCallback(data, data.length < 50 ? params.startRow + data.length : -1);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        },
       });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
+    }
+  }, [gridApi, year, title]);
 
-  const handleMovieClick = (movieID) => {
-    navigate(`/movies/data/${movieID}`);
+  const onGridReady = params => {
+    setGridApi(params.api);
   };
 
   return (
     <div className="movies-page">
-      <div className="movie-grid">
-        {movies.map((movie, index) => {
-          if (movies.length === index + 1) {
-            return (
-              <div ref={lastMovieElementRef} key={movie.imdbID}>
-                <MovieCell
-                  movie={movie}
-                  onClick={() => handleMovieClick(movie.imdbID)}
-                />
-              </div>
-            );
-          } else {
-            return (
-              <MovieCell
-                key={movie.imdbID}
-                movie={movie}
-                onClick={() => handleMovieClick(movie.imdbID)}
-              />
-            );
-          }
-        })}
+      <div className="ag-theme-alpine" style={{ flex: 1 }}>
+        <AgGridReact
+            onGridReady={onGridReady}
+            columnDefs={columnDefs}
+            onRowClicked={handleMovieRowClick}
+            rowSelection='single'
+            rowModelType='infinite'
+            paginationPageSize={50}
+            cacheBlockSize={50}
+            rowHeight={50}
+          />
+        </div>
       </div>
-      <div>{loading && 'Loading...'}</div>
-    </div>
-  );
-}
-
-export default MoviesPage;
+    );  
+  }
+  
+  export default MoviesPage;
+  

@@ -78,6 +78,22 @@ nav input {
   margin: 0 0.5rem;
 }
 
+/* MoviesPage CSS */
+.movies-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure the parent takes full viewport height */
+  width: 100%; /* Full width */
+  justify-content: space-between; /* Space out child elements */
+  align-items: stretch; /* Stretch children to fill width */
+}
+
+.movies-page label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #0066b9;
+}
+
 .search-form {
   display: flex;
   justify-content: center;
@@ -106,6 +122,46 @@ nav input {
   gap: 10px;
 }
 
+.ag-theme-alpine {
+  flex: 1; /* This will make the grid fill all remaining space */
+  width: 100%; /* Full width */
+}
+
+.ag-theme-alpine .ag-header-cell {
+  background-color: rgb(8, 81, 145);
+  color: #f37021;
+}
+
+.ag-theme-alpine .ag-header-cell-label {
+  color: #f37021;
+  font-weight: bold;
+}
+
+.ag-theme-alpine .ag-cell {
+  border-right: 1px solid #d9e2ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ag-theme-alpine .ag-row {
+  color: #0066b9;
+}
+
+.ag-theme-alpine .ag-row:hover {
+  background-color: #90dfff;
+  cursor: pointer;
+}
+
+.ag-theme-alpine .ag-paging-panel {
+  border-top: 1px solid #d9e2ee;
+}
+
+
+.ag-theme-alpine .ag-header-cell-label {
+  justify-content: center !important;
+}
+
 .movie-page {
   margin-top: 1rem;
 }
@@ -126,6 +182,22 @@ nav input {
   background-color: white;
   padding: 20px;
   border-radius: 4px;
+}
+
+.carousel .slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.carousel .control-dots .dot:hover, .carousel .control-dots .dot.selected {
+  background: #f37021;
+}
+
+.carousel-slide {
+  width: 25vw;
+  height: 80vh;
 }
 
 .legend {

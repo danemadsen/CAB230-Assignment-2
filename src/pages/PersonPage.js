@@ -1,6 +1,9 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getPerson, postRefresh } from '../API';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 function PersonPage() {
   const { id } = useParams();
@@ -35,6 +38,14 @@ function PersonPage() {
     navigate('/profile');
   };
 
+  const columnDefs = [
+    { headerName: 'Movie Name', field: 'movieName', sortable: true, flex: 1 },
+    { headerName: 'Character', field: 'characters', sortable: true, flex: 1, valueGetter: (params) => params.data.characters.join(', ') },
+    { headerName: 'IMDb Rating', field: 'imdbRating', sortable: true, flex: 1 },
+  ];
+
+  const rowData = person ? person.roles : [];
+
   if (error) {
     return (
       <div>
@@ -53,16 +64,12 @@ function PersonPage() {
           <p>Date of Birth: {person.birthYear}</p>
           <p>Death: {person.deathYear}</p>
           <h3>Roles:</h3>
-          <ul>
-            {person.roles.map((role, index) => (
-              <li key={index}>
-                <Link to={`/movies/data/${role.movieId}`}>
-                  {role.movieName}
-                </Link>{' '}
-                as {role.characters.join(', ')} ({role.category})
-              </li>
-            ))}
-          </ul>
+          <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
+            <AgGridReact
+              columnDefs={columnDefs}
+              rowData={rowData}
+            />
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

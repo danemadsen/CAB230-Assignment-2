@@ -37,7 +37,7 @@
 			birth year, death year and all the movies they have been involved with.\\
 			\\
 			It achieve this goal and to provide the user with the best experience I can, i have used a 
-			number of advanced react features, including the use of react router, ag-grid and 
+			number of advanced react features, including the use of react router, IntesectionObserver and 
 			react-responsive-carousel. The use of these features has allowed me to create a 
 			professional looking application that is both easy to use and responsive for the user.\\
 
@@ -50,10 +50,27 @@
 			This implementation covers all the requirements of the assignment specification. 
 			Navigation is handled using react router, controlled forms are used for all user input, and 
 			every 10 minutes the refresh token is used to get a new access token. In addition to this, 
-			the application uses ag-grid to display the search results and react-responsive-carousel 
-			to display the highest scoring movies of all time on the home (landing) page.\\
+			the application uses ag-grid to display the search results in an infinitly scrolling grid 
+			and react-responsive-carousel to display the highest scoring movies of all time on the 
+			home (landing) page. On the person page the movies the person is involved in are displayed 
+			in a grid with the IMDb Rating.\\
+
+	\newpage
 
 	\section{Use of End Points}
+		\subsection{/movies/search}
+			This endpoint is utilised by two search forms at the top of the application. The first 
+			search form is for the user to search for movies by title, and the second is for the user 
+			to search for movies by year. Both of these forms are controlled forms and can be accessed 
+			from any page in the application. Doing it this way removes an extra layer of complexity for 
+			the user and allows them to get into the function of the application right from the start of
+			the application.\\
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure3.jpg}}
+			\end{center}
+
+		\subsection{/movies/data/\{imdbID\}}
 
 
 
