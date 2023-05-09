@@ -58,13 +58,18 @@
 	\newpage
 
 	\section{Use of End Points}
+		The functionality for all the API endpoints is handled in API.js. This file contains all the 
+		functions that are used to make requests to the API. By containing all the API functionality 
+		in one file, it makes it easier to maintain and potentially update the application in the 
+		future.\\
+
 		\subsection{/movies/search}
-			This endpoint is utilised by two search forms at the top of the application. The first 
-			search form is for the user to search for movies by title, and the second is for the user 
-			to search for movies by year. Both of these forms are controlled forms and can be accessed 
-			from any page in the application. Doing it this way removes an extra layer of complexity for 
-			the user and allows them to get into the function of the application right from the start of
-			the application.\\
+			This endpoint is implemented as the getMovies function and is utilised by two 
+			search forms at the top of the application. The first search form is for the user to search 
+			for movies by title, and the second is for the user to search for movies by year. Both of 
+			these forms are controlled forms and can be accessed from any page in the application. Doing 
+			it this way removes an extra layer of complexity for the user and allows them to get into the 
+			function of the application right from the start of	the application.\\
 
 			\begin{center}
 				\fbox{\includegraphics[width=\textwidth]{Figure3.jpg}}
@@ -73,11 +78,12 @@
 		\newpage
 
 		\subsection{/movies/data/\{imdbID\}}
-			This endpoint is utilised by the movie page to get the details of the movie the user has 
-			selected. The movie page is accessed by clicking on any of the movies in the search results. 
-			The movie page displays all the details of the movie, including the title, year, box office 
-			earnings, runtime, genre, country of origin, plot, cast and ratings. each cast member is a 
-			clickable link that will lead to that cast members respective page.\\
+			This endpoint is implemented as the getMovie function and is utilised by the movie page to 
+			get the details of the movie the user has selected. The movie page is accessed by clicking 
+			on any of the movies in the search results. The movie page displays all the details of the 
+			movie, including the title, year, box office earnings, runtime, genre, country of origin, 
+			plot, cast and ratings. each cast member is a clickable link that will lead to that cast 
+			members respective page.\\
 
 			\begin{center}
 				\fbox{\includegraphics[width=\textwidth]{Figure4.jpg}}
@@ -86,6 +92,50 @@
 		\newpage
 
 		\subsection{/people/\{id\}}
+			This endpoint is implemented as the getPerson function and is utilised by the person page 
+			to get the details of the person the user has selected. The person page is accessed by 
+			clicking on any of the cast members on the movie page. The person page displays all the 
+			details of the person exposed by the API, including their name, birth year, death year, 
+			all the movies they have been involved with. In a grid the name of each movie, the name 
+			of the character the person played and the IMDb Rating is displayed for the users 
+			convenience.\\
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure5.jpg}}
+			\end{center}
+
+		\newpage
+
+		\subsection{/user/register}
+			This endpoint is implemented as the postRegister function and is utilised by the profile 
+			page to register new users. The profile page is accessed by clicking on the profile button 
+			in the navidation bar at the top of the page. 
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure6.jpg}}
+			\end{center}
+
+
+		\newpage
+
+		\subsection{/user/login}
+			This endpoint is implemented as the postLogin function and is utilised by the profile page 
+			to login existing users.
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure7.jpg}}
+			\end{center}
+
+		\newpage
+
+		\subsection{/user/refresh}
+			This endpoint is implemented as the postRefresh function and is utilised in the back end 
+			in App.js to refresh the tokens when the app first starts and every 10 minutes after. 
+			This is done to ensure the user does not have to login every 10 minutes.\\
+		
+		\subsection{/user/logout}
+			This endpoint is implemented as the postLogout function and is utilised by the profile 
+			page to logout the user.\\
 			
 
 

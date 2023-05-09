@@ -97,7 +97,9 @@ async function postRefresh(){
       body: JSON.stringify({ refreshToken }),
     });
     const data = await checkError(response);
-    return { success: true, bearerToken: data.bearerToken, refreshToken: data.refreshToken };
+    localStorage.setItem('accessToken', data.bearerToken.token);
+    localStorage.setItem('refreshToken', data.refreshToken.token);
+    return { success: true };
   } 
   catch (error) {
     console.error(error);
@@ -114,6 +116,7 @@ async function postLogout(){
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${refreshToken}`,
       },
       body: JSON.stringify({ refreshToken }),
     });
@@ -124,8 +127,6 @@ async function postLogout(){
   } 
   catch (error) {
     console.error(error);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     return { success: false, message: error.message };
   }
 };

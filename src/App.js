@@ -14,9 +14,16 @@ import SearchInputs from './components/SearchInputs';
 
 function App() {
   useEffect(() => {
+    postRefresh().catch((error) => {
+      console.log(error);
+    });
+
     const refreshInterval = setInterval(() => {
-      postRefresh();
-    }, 600000); // 9 minutes
+      postRefresh().catch((error) => {
+        console.log(error);
+      });
+    }, 600000); // 10 minutes
+
     return () => {
       clearInterval(refreshInterval);
     };

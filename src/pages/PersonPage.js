@@ -38,6 +38,10 @@ function PersonPage() {
     navigate('/profile');
   };
 
+  const handleMovieRowClick = (event) => {
+    navigate(`/movies/data/${event.data.movieId}`); // assuming movieId is the correct field for movie id
+  };
+
   const columnDefs = [
     { headerName: 'Movie Name', field: 'movieName', sortable: true, flex: 1 },
     { headerName: 'Character', field: 'characters', sortable: true, flex: 1, valueGetter: (params) => params.data.characters.join(', ') },
@@ -68,6 +72,7 @@ function PersonPage() {
             <AgGridReact
               columnDefs={columnDefs}
               rowData={rowData}
+              onRowClicked={handleMovieRowClick} // add this line
             />
           </div>
         </div>
