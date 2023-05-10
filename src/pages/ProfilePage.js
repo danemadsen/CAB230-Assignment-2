@@ -47,7 +47,7 @@ const ProfilePage = () => {
   if (authStatus) {
     return (
       <div className="profile-page">
-        <h2>Welcome, {email}</h2>
+        <h2>You are Logged In</h2>
         <button onClick={handleLogout}>Logout</button>
       </div>
     );

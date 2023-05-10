@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getMovies } from '../API';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -29,7 +28,7 @@ function MoviesPage() {
 
   const searchParams = new URLSearchParams(location.search);
   const title = useDebounce(searchParams.get('title') || '', 500);
-  const year = useDebounce(searchParams.get('year') || '', 500);
+  const year = searchParams.get('year') || '';
 
   const [gridApi, setGridApi] = useState(null);
 
@@ -47,7 +46,7 @@ function MoviesPage() {
   ];  
 
   useEffect(() => {
-    if (gridApi) {
+    if (gridApi && (title || (year.length === 4 || year === ''))) {
       gridApi.setDatasource({
         getRows: function (params) {
           getMovies(year, title, params.startRow / 50 + 1)
@@ -85,4 +84,3 @@ function MoviesPage() {
   }
   
   export default MoviesPage;
-  

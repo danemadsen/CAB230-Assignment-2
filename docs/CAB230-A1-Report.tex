@@ -109,7 +109,13 @@
 		\subsection{/user/register}
 			This endpoint is implemented as the postRegister function and is utilised by the profile 
 			page to register new users. The profile page is accessed by clicking on the profile button 
-			in the navidation bar at the top of the page. 
+			in the navidation bar at the top of the page. When first launched, if the user isnt logged 
+			in the profile page will be in the login state, if the user presses the register button the 
+			profile page will be transitioned into the register state. The register state contains 
+			fields for the user to enter their email, password and confirm password. If the user 
+			presses the register button the /user/register endpoint will be utilised to register the 
+			user and the tokens will be stored in local storage. If the user presses back to login the 
+			page will be transitioned back into the login state.\\
 
 			\begin{center}
 				\fbox{\includegraphics[width=\textwidth]{Figure6.jpg}}
@@ -120,7 +126,11 @@
 
 		\subsection{/user/login}
 			This endpoint is implemented as the postLogin function and is utilised by the profile page 
-			to login existing users.
+			to login existing users. If the user accesses the the profile page while logged out they 
+			will be gretted with a login prompt with an email and password field, button to login and 
+			a button to register. If the user presses the register button the page will be transitioned 
+			into the register state. If the user presses the login button the /user/login endpoint will 
+			be utilised to login the user and the tokens will be stored in local storage.\\
 
 			\begin{center}
 				\fbox{\includegraphics[width=\textwidth]{Figure7.jpg}}
@@ -135,8 +145,77 @@
 		
 		\subsection{/user/logout}
 			This endpoint is implemented as the postLogout function and is utilised by the profile 
-			page to logout the user.\\
-			
+			page to logout the user. If the user accesses the the profile page while logged in they 
+			will be greeted with a message telling them they are logged in accompanied with a button 
+			to logout, if the user presses the logout button the /user/logout endpoint will be utilised 
+			to logout the user and the tokens will be deleted.\\
 
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure8.jpg}}
+			\end{center}
+	
+	\newpage
+
+	\section{Modules Used}
+		\subsection{react-router-dom}
+			This module was used to handle navigation within the application. It was used to create 
+			the navigation bar at the top of the page and to create the routes for the different 
+			pages in the application.\\
+
+			\href{https://www.npmjs.com/package/react-router-dom}{https://www.npmjs.com/package/react-router-dom}\\
+		
+		\subsection{react-responsive-carousel}
+			This module was used to create a carousel on the home page to display the movies with the 
+			highest IMDb Rating.\\
+
+			\href{https://www.npmjs.com/package/react-responsive-carousel}{https://www.npmjs.com/package/react-responsive-carousel}\\
+		
+		\subsection{ag-grid-react}
+			This module was used in MoviesPage to create a grid to display the search results in an infinitely 
+			scrolling grid, and in PersonPage it is used to display the movies the person stars in.\\
+
+			\href{https://www.npmjs.com/package/ag-grid-react}{https://www.npmjs.com/package/ag-grid-react}\\
+		
+		\subsection{ag-grid-community}
+			This module was used in both MoviesPage and PersonPage to utilise the CSS for the respective grids.\\
+
+			\href{https://www.npmjs.com/package/ag-grid-community}{https://www.npmjs.com/package/ag-grid-community}\\
+	
+	\newpage
+
+	\section{Application Design}
+		\subsection{Navigation and Layout}
+			The application has been designed to be as simple to use as possible. The ultimate goal of the 
+			design was to develop a user experience that the user can understand and use without having to 
+			think about it.\\
+			\\
+			A few design choices were made to achive this goal. The first major choice i made was to move the 
+			search bars to the navigation bar at the top of the page. This was done to make the search 
+			functionality more accessible to the user by allowing them to search from any page in the 
+			application. Moving the search bars to the navigation also freed up space on the MoviesPage 
+			allowing me to display more search results at once.
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure9.jpg}}\\
+			\end{center}
+			\vspace{10pt}
+			During development i also investigated the possibility of having the poster image for each movie 
+			displayed in the search results. I decided against this as it excessively queries the API and 
+			often resulted in a rate limit. It also increased the complexity of being able to sort the search 
+			results which was something I wanted to implement.\\
+
+			\begin{center}
+				\fbox{\includegraphics[width=\textwidth]{Figure10.jpg}}\par
+				\vspace{40pt}
+				\fbox{\includegraphics[width=\textwidth]{Figure11.jpg}}
+			\end{center}
+
+		\newpage
+
+		\subsection{Usability and Quality of Design}
+
+
+		
+		
 
 \end{document}
