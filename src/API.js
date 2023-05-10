@@ -126,6 +126,8 @@ async function postLogout(){
     return { success: true, message: data.message };
   } 
   catch (error) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     console.error(error);
     return { success: false, message: error.message };
   }

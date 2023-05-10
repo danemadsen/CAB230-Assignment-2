@@ -35,7 +35,14 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/"><img src={logo} alt="Home" width="40" height="40" /></Link>
+              <Link to="/">
+                <img 
+                  src={logo} 
+                  alt="UMDb Home" 
+                  width="40" 
+                  height="40" 
+                />
+              </Link>
             </li>
           </ul>
           <SearchInputs />
