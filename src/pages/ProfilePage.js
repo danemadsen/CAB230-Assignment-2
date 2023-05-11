@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { postLogin, postRegister, postLogout } from '../API';
-import '../App.css'
+import '../styles/ProfilePage.css'
 
 const ProfilePage = () => {
   const [authStatus, setAuthStatus] = useState(false);

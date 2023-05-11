@@ -1,0 +1,69 @@
+/* Global CSS */
+
+body {
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+
+h1, h2, h3{
+  background-color: white;
+  color: #f37021;
+}
+
+p {
+  background-color: white;
+  color: #0066b9;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  color: #0066b9;
+}
+
+nav {
+  background-color: #003c72ff;
+  padding: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav img {
+  height: 40px;
+  width: auto;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+nav li a {
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  text-decoration: underline;
+}
+
+nav li a:visited {
+  color: white;
+}
+
+nav input {
+  margin-left: 5px;
+  width: 20rem;
+  height: 2rem;
+}

@@ -4,6 +4,7 @@ import { getPerson, postRefresh } from '../API';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import '../styles/PersonPage.css';
 
 function PersonPage() {
   const { id } = useParams();

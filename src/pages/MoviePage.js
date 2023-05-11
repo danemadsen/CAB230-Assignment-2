@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { getMovie } from '../API';
+import '../styles/MoviePage.css'
 
 function MoviePage() {
   const { id } = useParams();
