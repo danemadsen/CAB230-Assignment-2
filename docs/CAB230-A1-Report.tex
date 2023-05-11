@@ -1,4 +1,5 @@
 \documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[none]{hyphenat}
@@ -247,39 +248,66 @@
 		
 	\section{Technical Description}
 		\subsection{Architecture}
-			\begin{center}
+			\begin{minipage}[t]{0.6\textwidth}
+			  	\begin{itemize}
+					\item \textbf{Components:}\\
+						This folder contains the components and the API handler for the application.
+					\item \textbf{Pages:}\\
+						This folder contains all the pages for the application.
+					\item \textbf{Styles:}\\
+						This folder contains all the CSS files for the application.
+			  	\end{itemize}
+
+				The diagram on the right shows the file structure of the application. As you can see, the 
+				application is structured in a very simple way. As previously mentioned, all the code for 
+				handling API requests is contained within the API.js file. This has made it easier to write 
+				the code for the application as it is all in one place and can be reused easily.\\
+				
+				The only component of the application that has been seperated out into its own file is the 
+				search inputs. The only reason this was done was because I couldnt get it working within 
+				App.js.\\
+
+				Each page of the application has its own JS and CSS file. This was done to make the code 
+				easier to read and understand, and to cut down on the amount of code in each file.\\
+			\end{minipage}
+			\hfill
+			\begin{minipage}[t]{0.3\textwidth} 
+				\vspace{0pt}
 				\begin{forest}
-					for tree={
-					  folder,
-					  grow'=0,
-					  fit=band,
-					}
-					[Project Root
-						  [Components
-							[SearchInputs.js]
-							[API.js]
-						  ]
-						  [Pages
-							  [LandingPage.js]
-							[MoviePage.js]
-							[MoviesPage.js]
-							[PersonPage.js]
-							[ProfilePage.js]
-							]
-						  [Styles
-							  [App.css]
-							  [LandingPage.css]
-							[MoviePage.css]
-							[MoviesPage.css]
-							[PersonPage.css]
-							[ProfilePage.css]
-							[SearchInputs.css]
-							]
-						[App.js]
-					]
-				\end{forest}
-			\end{center}
+				for tree={
+				  folder,
+				  grow'=0,
+				  fit=band,
+				}
+				[SRC
+				  [Components
+					[SearchInputs.js]
+					[API.js]
+				  ]
+				  [Pages
+					[LandingPage.js]
+					[MoviePage.js]
+					[MoviesPage.js]
+					[PersonPage.js]
+					[ProfilePage.js]
+				  ]
+				  [Styles
+					[App.css]
+					[LandingPage.css]
+					[MoviePage.css]
+					[MoviesPage.css]
+					[PersonPage.css]
+					[ProfilePage.css]
+					[SearchInputs.css]
+				  ]
+				  [App.js]
+				  [Logo.svg]
+				]
+			  \end{forest}
+			\end{minipage}
 			\newpage
+		\subsection{Test Plan}
+			
 
 
 \end{document}
