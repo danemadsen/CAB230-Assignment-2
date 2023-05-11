@@ -4,6 +4,7 @@
 \usepackage[none]{hyphenat}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage[edges]{forest}
 
 \setlength{\fboxrule}{2pt}
 
@@ -246,5 +247,39 @@
 		
 	\section{Technical Description}
 		\subsection{Architecture}
+			\begin{center}
+				\begin{forest}
+					for tree={
+					  folder,
+					  grow'=0,
+					  fit=band,
+					}
+					[Project Root
+						  [Components
+							[SearchInputs.js]
+							[API.js]
+						  ]
+						  [Pages
+							  [LandingPage.js]
+							[MoviePage.js]
+							[MoviesPage.js]
+							[PersonPage.js]
+							[ProfilePage.js]
+							]
+						  [Styles
+							  [App.css]
+							  [LandingPage.css]
+							[MoviePage.css]
+							[MoviesPage.css]
+							[PersonPage.css]
+							[ProfilePage.css]
+							[SearchInputs.css]
+							]
+						[App.js]
+					]
+				\end{forest}
+			\end{center}
+			\newpage
+
 
 \end{document}

@@ -1,6 +1,6 @@
 import './styles/App.css';
 import logo from './logo.svg';
-import { postRefresh } from './API'
+import { postRefresh } from './components/API'
 
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';

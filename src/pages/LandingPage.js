@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMovies, getMovie } from '../API';
+import { getMovies, getMovie } from '../components/API';
 import { Carousel } from 'react-responsive-carousel';
 import { useNavigate } from 'react-router-dom';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';

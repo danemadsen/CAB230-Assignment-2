@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { postLogin, postRegister, postLogout } from '../API';
+import { postLogin, postRegister, postLogout } from '../components/API';
 import '../styles/ProfilePage.css'
 
 const ProfilePage = () => {
