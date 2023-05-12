@@ -52,7 +52,7 @@
 			This implementation covers all the requirements of the assignment specification. 
 			Navigation is handled using react router, controlled forms are used for all user input, and 
 			every 10 minutes the refresh token is used to get a new access token. In addition to this, 
-			the application uses ag-grid to display the search results in an infinitly scrolling grid 
+			the application uses ag-grid to display the search results in an infinitely scrolling grid 
 			and react-responsive-carousel to display the highest scoring movies of all time on the 
 			home (landing) page. On the person page the movies the person is involved in are displayed 
 			in a grid with the IMDb Rating.\\
@@ -66,7 +66,7 @@
 		future.\\
 
 		\subsection{/movies/search}
-			This endpoint is implemented as the getMovies function and is utilised by two 
+			This endpoint is implemented as the getMovies function and is utilized by two 
 			search forms at the top of the application. The first search form is for the user to search 
 			for movies by title, and the second is for the user to search for movies by year. Both of 
 			these forms are controlled forms and can be accessed from any page in the application. Doing 
@@ -75,7 +75,7 @@
 			(\cref{fig:figure3})
 
 		\subsection{/movies/data/\{imdbID\}}
-			This endpoint is implemented as the getMovie function and is utilised by the movie page to 
+			This endpoint is implemented as the getMovie function and is utilized by the movie page to 
 			get the details of the movie the user has selected. The movie page is accessed by clicking 
 			on any of the movies in the search results. The movie page displays all the details of the 
 			movie, including the title, year, box office earnings, runtime, genre, country of origin, 
@@ -84,7 +84,7 @@
 			(\cref{fig:figure4})
 
 		\subsection{/people/\{id\}}
-			This endpoint is implemented as the getPerson function and is utilised by the person page 
+			This endpoint is implemented as the getPerson function and is utilized by the person page 
 			to get the details of the person the user has selected. The person page is accessed by 
 			clicking on any of the cast members on the movie page. The person page displays all the 
 			details of the person exposed by the API, including their name, birth year, death year, 
@@ -94,36 +94,36 @@
 			(\cref{fig:figure5})
 
 		\subsection{/user/register}
-			This endpoint is implemented as the postRegister function and is utilised by the profile 
+			This endpoint is implemented as the postRegister function and is utilized by the profile 
 			page to register new users. The profile page is accessed by clicking on the profile button 
-			in the navidation bar at the top of the page. When first launched, if the user isnt logged 
+			in the navigation bar at the top of the page. When first launched, if the user isn't logged 
 			in the profile page will be in the login state, if the user presses the register button the 
 			profile page will be transitioned into the register state. The register state contains 
 			fields for the user to enter their email, password and confirm password. If the user 
-			presses the register button the /user/register endpoint will be utilised to register the 
+			presses the register button the /user/register endpoint will be utilized to register the 
 			user and the tokens will be stored in local storage. If the user presses back to login the 
 			page will be transitioned back into the login state.\\
 			(\cref{fig:figure6})
 
 		\subsection{/user/login}
-			This endpoint is implemented as the postLogin function and is utilised by the profile page 
+			This endpoint is implemented as the postLogin function and is utilized by the profile page 
 			to login existing users. If the user accesses the the profile page while logged out they 
-			will be gretted with a login prompt with an email and password field, button to login and 
+			will be greeted with a login prompt with an email and password field, button to login and 
 			a button to register. If the user presses the register button the page will be transitioned 
 			into the register state. If the user presses the login button the /user/login endpoint will 
-			be utilised to login the user and the tokens will be stored in local storage.\\
+			be utilized to login the user and the tokens will be stored in local storage.\\
 			(\cref{fig:figure7})
 
 		\subsection{/user/refresh}
-			This endpoint is implemented as the postRefresh function and is utilised in the back end 
+			This endpoint is implemented as the postRefresh function and is utilized in the back end 
 			in App.js to refresh the tokens when the app first starts and every 10 minutes after. 
 			This is done to ensure the user does not have to login every 10 minutes.
 		
 		\subsection{/user/logout}
-			This endpoint is implemented as the postLogout function and is utilised by the profile 
+			This endpoint is implemented as the postLogout function and is utilized by the profile 
 			page to logout the user. If the user accesses the the profile page while logged in they 
 			will be greeted with a message telling them they are logged in accompanied with a button 
-			to logout, if the user presses the logout button the /user/logout endpoint will be utilised 
+			to logout, if the user presses the logout button the /user/logout endpoint will be utilized 
 			to logout the user and the tokens will be deleted.\\
 			(\cref{fig:figure8})
 
@@ -148,7 +148,7 @@
 			\href{https://www.npmjs.com/package/ag-grid-react}{https://www.npmjs.com/package/ag-grid-react}
 		
 		\subsection{ag-grid-community}
-			This module was used in both MoviesPage and PersonPage to utilise the CSS for the respective grids.\\
+			This module was used in both MoviesPage and PersonPage to utilize the CSS for the respective grids.\\
 
 			\href{https://www.npmjs.com/package/ag-grid-community}{https://www.npmjs.com/package/ag-grid-community}
 	
@@ -161,7 +161,7 @@
 			design was to develop a user experience that the user can understand and use without having to 
 			think about it.\\
 			\\
-			A few design choices were made to achive this goal. The first major choice i made was to move the 
+			A few design choices were made to achieve this goal. The first major choice i made was to move the 
 			search bars to the navigation bar at the top of the page. This was done to make the search 
 			functionality more accessible to the user by allowing them to search from any page in the 
 			application. Moving the search bars to the navigation also freed up space on the MoviesPage 
@@ -175,32 +175,32 @@
 		\subsection{Usability and Quality of Design}
 			As the application was designed with simplicity in mind, the usability of the application is 
 			very high. The application is very easy to use and the user can navigate the application with 
-			ease. The application is layed out in a way that is very clean, the only page that can at all be 
+			ease. The application is laid out in a way that is very clean, the only page that can at all be 
 			considered cluttered is the LandingPage because of the carousel but even then the carousel is 
-			very clean, easy to use and it doesnt seems to distract the user from the rest of the page.\\
+			very clean, easy to use and it doesn't seems to distract the user from the rest of the page.\\
 			\\
 			The navigation of the app is very simple and easy for the user to understand. As previously mentioned, 
 			by having the search bars within  the navigation bar at the top of the page the user can search from 
 			anywhere in the application. The only part of the navigation that may confuse the user is the home button 
 			using the logo of the application. It may not be clear to the user that this is a button that leads them 
-			home. But, this is quite a common design choice in web design and there isnt much use for the user to return 
+			home. But, this is quite a common design choice in web design and there isn't much use for the user to return 
 			to the home page as the user can search from any page in the application.\\
 			\\
 			The design of the application is consistent throughout. The navigation bar is the same on every page, 
 			very little colours are used throughout the application and the colours that are used are consistent.
-			Only the standard font is used throughout the application except in the ag-grids where a seperate style 
+			Only the standard font is used throughout the application except in the ag-grids where a separate style 
 			is used.\\
 		
 		\subsection{Accessibility}
 			The application has attempted to be as accessible as possible. The application achieve most of the 
-			checkpoints of the W3C Web Content Accessibility Guidelines 2.0. The application has achived the 
+			checkpoints of the W3C Web Content Accessibility Guidelines 2.0. The application has achieved the 
 			following checkpoints:
 			\begin{itemize}
 				\item 1.1.1 All non-text content such as images have alternative text.
 				\item 1.2.1 Information conveyed in colour can also be conveyed in black and white. 
 				\item 1.6.1 Page can be read without CSS.
 				\item 1.6.2 Text equivalents update when content changes.
-				\item 1.7.1 The screen doesnt flicker.
+				\item 1.7.1 The screen doesn't flicker.
 				\item 1.14.1 The application uses the clearest language appropriate.
 			\end{itemize}
 		
@@ -219,8 +219,8 @@
 			handling API requests is contained within the API.js file. This has made it easier to write 
 			the code for the application as it is all in one place and can be reused easily.\\
 			
-			The only component of the application that has been seperated out into its own file is the 
-			search inputs. The only reason this was done was because I couldnt get it working within 
+			The only component of the application that has been separated out into its own file is the 
+			search inputs. The only reason this was done was because I couldn't get it working within 
 			App.js.\\
 
 			Each page of the application has its own JS and CSS file. This was done to make the code 
@@ -306,7 +306,7 @@
 				\cref{fig:figure15} \\
 				\hline
 				Click on a movie. &
-				Respective movie page is displayed. &
+				Respective movie page is displaid. &
 				\textcolor{darkgreen}{PASS} &
 				\cref{fig:figure16} \\
 				\hline
@@ -346,7 +346,7 @@
 			The only notable issues that persist in the final version of the app is the lack of 
 			an ability to sort the movies by title, year or rating, and an error that occurs when the 
 			application has been offline for more than a day. The first issue is due to the fact that 
-			the API doesnt support sorting and the second issue is due to the fact that the refresh 
+			the API doesn't support sorting and the second issue is due to the fact that the refresh 
 			token expires after 24 hours. In summation, both of these issues are server side so theres 
 			not alot that can be done.
 	
