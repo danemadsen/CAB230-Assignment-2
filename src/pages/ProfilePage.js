@@ -10,8 +10,6 @@ const ProfilePage = () => {
   const [isRegister, setIsRegister] = useState(false);
 
   useEffect(() => {
-    // Check if the user is logged in when the component mounts
-    // For example, check if the access token is stored in localStorage
     const isLoggedIn = localStorage.getItem('accessToken') ? true : false;
     setAuthStatus(isLoggedIn);
   }, []);

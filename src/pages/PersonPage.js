@@ -40,7 +40,7 @@ function PersonPage() {
   };
 
   const handleMovieRowClick = (event) => {
-    navigate(`/movies/data/${event.data.movieId}`); // assuming movieId is the correct field for movie id
+    navigate(`/movies/data/${event.data.movieId}`);
   };
 
   const columnDefs = [
@@ -73,7 +73,7 @@ function PersonPage() {
             <AgGridReact
               columnDefs={columnDefs}
               rowData={rowData}
-              onRowClicked={handleMovieRowClick} // add this line
+              onRowClicked={handleMovieRowClick}
             />
           </div>
         </div>
